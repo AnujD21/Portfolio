@@ -1,0 +1,10 @@
+node_modules
+dist
+dist-ssr
+*.local
+*.tsbuildinfo
+.DS_Store
+
+# Local-only files (the site serves the résumé from public/)
+portfolio-v1-backup.zip
+/Anuj_Das_Resume.pdf
