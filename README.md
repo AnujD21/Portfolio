@@ -6,6 +6,8 @@
 
 Personal portfolio of **Anuj Das**, AI and ML engineer (B.E. Computer Science, AI and ML, Easwari Engineering College, Chennai, class of 2027). One WebGL particle system sits behind the whole page and rebuilds itself into a 3D model of each project as you scroll.
 
+The site is fully bilingual. **日本語版: [anujdas.vercel.app/ja](https://anujdas.vercel.app/ja)**
+
 ## The idea
 
 ![Six particle formations: a heat sphere, drone terrain with heat signatures, a chiller pipe network, an invoice being scanned, a job-matching graph and an edge device grid](docs/formations.webp)
@@ -29,7 +31,7 @@ About 22,000 particles, coloured like a thermal camera (steel, then heat orange,
 | SkyNetics Rescue Drone | Offline drone that finds people buried by avalanches and landslides, fusing thermal, mmWave radar and YOLOv8 vision on a Raspberry Pi 4 | [Repo](https://github.com/AnujD21/SkyNetics_RAS_Drone) |
 | Chiller Valve Management | Live digital twin of an industrial chiller network at Larsen & Toubro | Internal (L&T) |
 | SmartInvoice AI | OCR pipeline that extracts 15+ fields from PDF invoices with per-field confidence scores | Private |
-| Shigotai | Career platform that explains how well you match live jobs at Japanese companies | [Repo](https://github.com/AnujD21/Shigotai) |
+| Shigotai | Career platform that explains how well you match live jobs at Japanese companies | [Repo](https://github.com/AnujD21/Shigotai), [Live](https://shigotai-jobs.vercel.app) |
 | EdgeGrid | Control plane for firmware rollouts and automatic rollback across mixed edge devices | [Repo](https://github.com/AnujD21/EdgeGrid) |
 
 ## Features
@@ -39,10 +41,13 @@ About 22,000 particles, coloured like a thermal camera (steel, then heat orange,
 - **Preloader.** It counts against real work (fonts and the WebGL scene), then lifts away while the particles fly in and assemble.
 - **Command palette.** Press <kbd>Ctrl</kbd> + <kbd>K</kbd> (<kbd>⌘</kbd> + <kbd>K</kbd> on Mac) to jump to a section, copy the email address or download the résumé.
 - **Details.** Magnetic buttons, film grain, a velocity-linked logo strip, hover text rolls and a scroll progress bar.
+- **English and Japanese.** One click in the nav (or `/ja` in the URL) switches every word on the page. You stay on the same section, and the 3D scene carries on. Japanese text uses Noto Sans JP, wraps at natural phrase boundaries (BudouX), and gets its own spacing rules rather than the tight Latin tracking.
 - **Responsive.** On phones each formation sits in a header band above its project, and the text slides over it on a solid sheet.
 - **Accessible.** Honours reduced-motion settings, falls back gracefully without WebGL, and includes keyboard navigation, focus rings and a skip link.
 
 ![The site on a phone: hero, the SkyNetics project and the SmartInvoice project](docs/mobile.webp)
+
+![The Japanese version of the hero section](docs/japanese.webp)
 
 ## Tech stack
 
@@ -50,6 +55,7 @@ About 22,000 particles, coloured like a thermal camera (steel, then heat orange,
 - **Styling:** Tailwind CSS v4, Geist and Geist Mono fonts
 - **3D:** Three.js, React Three Fiber, custom GLSL vertex and fragment shaders
 - **Animation:** GSAP 3 (ScrollTrigger, SplitText, ScrambleText), Lenis
+- **Languages:** A small React context for English and Japanese, BudouX phrase segmentation, Noto Sans JP
 - **Icons:** Phosphor Icons, Simple Icons
 - **Hosting:** Vercel
 
@@ -60,17 +66,20 @@ About 22,000 particles, coloured like a thermal camera (steel, then heat orange,
 3. **The shader does the motion.** The vertex shader in `src/three/shaders.ts` blends the two shapes with a per-particle delay and a curved path. It also adds simplex-noise drift, the scan sweep, the cursor push and the intro scatter. The fragment shader maps heat onto the thermal colour ramp.
 4. **Scroll drives the index.** Every element marked `data-formation` gets a ScrollTrigger. Their progress values add up to one continuous formation index (2.4 means 40% of the way from formation 2 to 3), which the render loop eases towards.
 5. **Three.js loads lazily.** The 3D bundle loads behind the preloader, so the page itself stays light.
+6. **Language switching remounts the content, not the scene.** Switching language rebuilds the page sections so every animation starts clean, puts you back on the section you were reading, and leaves the WebGL scene running. At build time a Vite plugin writes `dist/ja/index.html` with a Japanese title and description, so `/ja` previews and indexes in Japanese.
 
 ## Project structure
 
 ```
 src/
-  data/          All site content: profile, projects, experience, stack, credentials
+  data/          All site content in English and Japanese: profile, projects, experience, stack, credentials
+  i18n/          Language context, interface strings (ui.ts), Japanese phrase segmentation
   sections/      Page sections: Hero, About, Work, Experience, Stack, Credentials, Contact
   components/    Nav, Preloader, CommandPalette, RevealText, Counter, Magnetic and others
   three/         ParticleField (React Three Fiber), formations, GLSL shaders
   lib/           GSAP setup, Lenis scrolling, shared scene state, environment checks
-  styles/        Tailwind v4 theme tokens and global styles
+  styles/        Tailwind v4 theme tokens, global styles, Japanese typography rules
+resume/          HTML source of the résumé PDF
 public/          Favicon, résumé PDF and project images
 docs/            Screenshots used in this README
 ```
@@ -88,7 +97,16 @@ npm run preview   # serve the production build locally
 
 ## Editing content
 
-All text lives in `src/data/`, so content changes don't touch layout code. If you add or remove a featured project, also add or remove its entry in `formationConfigs` and `generators` in `src/three/formations.ts`. Those lists are matched to the page sections by order.
+All text lives in `src/data/` (content about Anuj) and `src/i18n/ui.ts` (buttons, headings and other interface copy), so content changes don't touch layout code. Every piece of text is written as `{ en: "...", ja: "..." }`, and TypeScript flags a missing translation. If you add or remove a featured project, also add or remove its entry in `formationConfigs` and `generators` in `src/three/formations.ts`. Those lists are matched to the page sections by order.
+
+## Résumé
+
+The downloadable résumé (`public/Anuj_Das_Resume.pdf`) is generated from `resume/resume.html`, a one-page A4 layout in Geist with real, selectable text for applicant tracking systems. To update it:
+
+1. Run `npm install` (the page loads its fonts from `node_modules`).
+2. Edit `resume/resume.html` and open it in Chrome.
+3. Print with destination **Save as PDF**, paper **A4**, margins **Default**, **Headers and footers** off and **Background graphics** on.
+4. Save over `public/Anuj_Das_Resume.pdf`.
 
 ## Deployment
 
@@ -102,7 +120,8 @@ The site is hosted on Vercel and Vercel detects the settings automatically:
 
 - 3D simplex noise GLSL by Ian McEwan, Ashima Arts ([webgl-noise](https://github.com/ashima/webgl-noise), MIT)
 - Brand logos from [Simple Icons](https://simpleicons.org) (CC0)
-- [Geist](https://vercel.com/font) fonts by Vercel (SIL Open Font License)
+- [Geist](https://vercel.com/font) fonts by Vercel and [Noto Sans JP](https://fonts.google.com/noto/specimen/Noto+Sans+JP) by Google (SIL Open Font License)
+- Japanese phrase segmentation by [BudouX](https://github.com/google/budoux) (Apache 2.0)
 - Interface icons from [Phosphor](https://phosphoricons.com) (MIT)
 
 ## Contact
