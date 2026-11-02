@@ -2,6 +2,16 @@
   "name": "anuj-das-portfolio",
   "private": true,
   "version": "2.0.0",
+  "description": "Personal portfolio of Anuj Das: a scroll-driven WebGL particle field built with React, Three.js and GSAP.",
+  "author": "Anuj Das <anujdas2109@gmail.com>",
+  "homepage": "https://anujdas.vercel.app",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AnujD21/Portfolio.git"
+  },
+  "engines": {
+    "node": ">=20.19"
+  },
   "type": "module",
   "scripts": {
     "dev": "vite",
