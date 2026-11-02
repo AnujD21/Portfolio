@@ -4,13 +4,13 @@ export function toast(message: string) {
   window.dispatchEvent(new CustomEvent<string>(TOAST_EVENT, { detail: message }));
 }
 
-export async function copyText(text: string, message = "Copied to clipboard") {
+export async function copyText(text: string, success: string, failure: string) {
   try {
     await navigator.clipboard.writeText(text);
-    toast(message);
+    toast(success);
     return true;
   } catch {
-    toast("Copy failed. Select the text instead.");
+    toast(failure);
     return false;
   }
 }

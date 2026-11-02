@@ -1,6 +1,7 @@
 import { useRef } from "react";
 import { gsap, useGSAP } from "../lib/gsap";
 import { reducedMotion } from "../lib/env";
+import { useLang } from "../i18n/lang";
 import type { Metric } from "../data/projects";
 
 const format = (m: Metric, v: number | string) => `${m.prefix ?? ""}${v}${m.suffix ?? ""}`;
@@ -8,6 +9,7 @@ const format = (m: Metric, v: number | string) => `${m.prefix ?? ""}${v}${m.suff
 /** Renders the final value in markup, then counts up from zero the first time it scrolls into view. */
 export function Counter({ metric }: { metric: Metric }) {
   const ref = useRef<HTMLSpanElement>(null);
+  const { tr } = useLang();
 
   useGSAP(
     () => {
@@ -31,7 +33,7 @@ export function Counter({ metric }: { metric: Metric }) {
 
   return (
     <span ref={ref} className="tabular">
-      {format(metric, metric.value)}
+      {format(metric, typeof metric.value === "number" ? metric.value : tr(metric.value))}
     </span>
   );
 }

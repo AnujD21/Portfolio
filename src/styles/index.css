@@ -1,6 +1,7 @@
 @import "tailwindcss";
 @import "@fontsource-variable/geist";
 @import "@fontsource-variable/geist-mono";
+@import "@fontsource-variable/noto-sans-jp";
 @import "lenis/dist/lenis.css";
 
 /*
@@ -9,9 +10,9 @@
 */
 
 @theme {
-  --font-sans: "Geist Variable", ui-sans-serif, system-ui, sans-serif;
-  --font-mono: "Geist Mono Variable", ui-monospace, "SFMono-Regular", monospace;
-  --font-jp: "Hiragino Sans", "Yu Gothic UI", "Meiryo", "Noto Sans JP", sans-serif;
+  /* Latin glyphs come from Geist; Japanese falls through to Noto Sans JP, which only downloads the subsets in use. */
+  --font-sans: "Geist Variable", "Noto Sans JP Variable", "Hiragino Sans", "Yu Gothic UI", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "Geist Mono Variable", "Noto Sans JP Variable", ui-monospace, "SFMono-Regular", monospace;
 
   --color-ink-950: #08090b;
   --color-ink-900: #0d0f12;
@@ -64,10 +65,6 @@
 
   button {
     cursor: pointer;
-  }
-
-  [lang="ja"] {
-    font-family: var(--font-jp);
   }
 
   ::-webkit-scrollbar {
@@ -145,6 +142,28 @@
   .tabular {
     font-variant-numeric: tabular-nums;
   }
+}
+
+/*
+  Japanese typography: break lines at natural phrase boundaries, give text more leading,
+  and drop the tight negative tracking used for Latin display type. Elements marked lang="en"
+  (the name, numbers, Latin product names) keep the Latin settings.
+*/
+html[lang="ja"] {
+  word-break: auto-phrase;
+  line-break: strict;
+}
+html[lang="ja"] [class*="tracking-[-"]:not([lang="en"]) {
+  letter-spacing: 0.01em;
+}
+html[lang="ja"] :is([class*="leading-[0"], [class*="leading-[1"]):not([lang="en"]) {
+  line-height: 1.32;
+}
+html[lang="ja"] .leading-relaxed {
+  line-height: 1.85;
+}
+html[lang="ja"] :is(h1, h2, h3):not([lang="en"]) {
+  font-feature-settings: "palt";
 }
 
 /* Reveal-on-scroll targets start hidden only when motion is allowed and JS has booted. */

@@ -3,13 +3,16 @@ import { ArrowDownIcon, DownloadSimpleIcon } from "@phosphor-icons/react";
 import { gsap, useGSAP } from "../lib/gsap";
 import { reducedMotion } from "../lib/env";
 import { scrollToTarget } from "../lib/scroll";
-import { profile } from "../data/profile";
+import { intro, profile } from "../data/profile";
+import { useLang } from "../i18n/lang";
 import { RevealText } from "../components/RevealText";
 import { Magnetic } from "../components/Magnetic";
 import { Roll } from "../components/Roll";
 
 export function Hero({ play }: { play: boolean }) {
   const root = useRef<HTMLElement>(null);
+  const { lang, t, tr } = useLang();
+  const availability = tr(profile.availability);
 
   useGSAP(
     () => {
@@ -24,7 +27,7 @@ export function Hero({ play }: { play: boolean }) {
         .fromTo(q("[data-hero='eyebrow']"), { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.6 }, 0)
         .to(
           q("[data-hero='eyebrow'] [data-text]"),
-          { duration: 1.4, scrambleText: { text: profile.availability, chars: "01", revealDelay: 0.35, speed: 0.6 } },
+          { duration: 1.4, scrambleText: { text: availability, chars: "01", revealDelay: 0.35, speed: 0.6 } },
           0,
         )
         .fromTo(
@@ -50,14 +53,15 @@ export function Hero({ play }: { play: boolean }) {
             <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-heat opacity-60" />
             <span className="relative inline-flex h-2 w-2 rounded-full bg-heat" />
           </span>
-          <span data-text>{profile.availability}</span>
+          <span data-text>{availability}</span>
         </p>
         <p
           data-hero="fade"
-          className="mt-7 max-w-[21ch] text-[clamp(1.7rem,3.3vw,2.9rem)] leading-[1.1] font-medium tracking-[-0.035em] text-balance"
+          className={`mt-7 text-[clamp(1.7rem,3.3vw,2.9rem)] leading-[1.1] font-medium tracking-[-0.035em] text-balance ${
+            lang === "ja" ? "max-w-[15em]" : "max-w-[21ch]"
+          }`}
         >
-          I build vision, sensor-fusion and edge systems that keep working when the{" "}
-          <span className="text-heat">network doesn't.</span>
+          {intro[lang].map((part) => (part.hl ? <span key={part.text} className="text-heat">{part.text}</span> : part.text))}
         </p>
         <div data-hero="fade" className="mt-9 flex flex-wrap items-center gap-3">
           <Magnetic>
@@ -69,13 +73,13 @@ export function Hero({ play }: { play: boolean }) {
               }}
               className="group btn-primary"
             >
-              <Roll>View work</Roll>
+              <Roll>{t.hero.viewWork}</Roll>
               <ArrowDownIcon size={17} weight="bold" />
             </a>
           </Magnetic>
           <Magnetic>
             <a href={profile.resume} download className="group btn-ghost">
-              <Roll>Résumé</Roll>
+              <Roll>{t.hero.resume}</Roll>
               <DownloadSimpleIcon size={17} />
             </a>
           </Magnetic>
@@ -85,6 +89,7 @@ export function Hero({ play }: { play: boolean }) {
       <div data-hero="name" className="shell">
         <RevealText
           as="h1"
+          lang="en"
           mode="chars"
           play={play}
           delay={0.15}

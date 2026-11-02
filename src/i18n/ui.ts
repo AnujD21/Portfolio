@@ -1,0 +1,153 @@
+/** Interface copy. Content about Anuj (projects, experience...) lives next to its data in src/data. */
+const en = {
+  meta: {
+    title: "Anuj Das | AI and ML Engineer",
+    description:
+      "Anuj Das is an AI and ML engineer building computer vision, sensor fusion and edge systems. Rescue drones, industrial IoT at L&T, document intelligence and full-stack AI products.",
+  },
+  skip: "Skip to content",
+  preloader: { label: "Loading", status: "Assembling scene" },
+  nav: {
+    primary: "Primary",
+    about: "About",
+    work: "Work",
+    experience: "Experience",
+    stack: "Stack",
+    contact: "Contact",
+    cta: "Get in touch",
+    openPalette: "Open command menu",
+    openMenu: "Open menu",
+    closeMenu: "Close menu",
+    menu: "Menu",
+    switchLang: "日本語",
+    switchLangShort: "JA",
+    switchLangLabel: "View this site in Japanese",
+  },
+  hero: { viewWork: "View work", resume: "Résumé" },
+  work: {
+    heading: "Selected work",
+    sub: "Five systems across computer vision, industrial IoT, document AI and edge infrastructure.",
+    viewCode: "View code",
+    liveDemo: "Live demo",
+    rail: "Projects",
+  },
+  experience: {
+    heading: "Experience",
+    sub: "Industrial IoT at Larsen & Toubro, where models had to earn their place on a working plant floor.",
+  },
+  stack: {
+    heading: "Stack",
+    sub: "The tools behind the projects above, grouped by where they sit in a system.",
+    technologies: "Technologies",
+  },
+  credentials: { education: "Education", certifications: "Certifications", languages: "Languages" },
+  contact: {
+    heading: "Let's build something real.",
+    sub: "Open to AI, ML and full-stack roles. Email is the fastest way to reach me.",
+    copy: "Copy email address",
+    builtWith: "Built with React, Three.js and GSAP.",
+    backToTop: "Back to top",
+  },
+  toast: { emailCopied: "Email copied", copyFailed: "Copy failed. Select the text instead." },
+  palette: {
+    label: "Command menu",
+    close: "Close command menu",
+    search: "Search actions",
+    results: "Actions",
+    empty: "No matching actions. Try “email” or “work”.",
+    groups: { go: "Go to", contact: "Contact", links: "Links", language: "Language" },
+    actions: {
+      about: "About",
+      work: "Selected work",
+      experience: "Experience",
+      stack: "Stack",
+      contact: "Contact",
+      top: "Back to top",
+      copy: "Copy email address",
+      mail: "Write an email",
+      resume: "Download résumé",
+      github: "Open GitHub",
+      linkedin: "Open LinkedIn",
+      lang: "日本語で表示する",
+    },
+  },
+};
+
+type Widen<T> = { [K in keyof T]: T[K] extends string ? string : Widen<T[K]> };
+export type UIStrings = Widen<typeof en>;
+
+const ja: UIStrings = {
+  meta: {
+    title: "アヌジ・ダス | AI・機械学習エンジニア",
+    description:
+      "AI・機械学習エンジニア、アヌジ・ダスのポートフォリオ。画像認識、センサーフュージョン、エッジAI、L&Tでの産業IoT、ドキュメントAIの開発実績を紹介しています。",
+  },
+  skip: "本文へスキップ",
+  preloader: { label: "読み込み中", status: "シーンを構築中" },
+  nav: {
+    primary: "メイン",
+    about: "プロフィール",
+    work: "実績",
+    experience: "経歴",
+    stack: "スキル",
+    contact: "お問い合わせ",
+    cta: "お問い合わせ",
+    openPalette: "コマンドメニューを開く",
+    openMenu: "メニューを開く",
+    closeMenu: "メニューを閉じる",
+    menu: "メニュー",
+    switchLang: "English",
+    switchLangShort: "EN",
+    switchLangLabel: "View this site in English",
+  },
+  hero: { viewWork: "実績を見る", resume: "レジュメ" },
+  work: {
+    heading: "主なプロジェクト",
+    sub: "画像認識、産業IoT、ドキュメントAI、エッジインフラにまたがる5つのシステム。",
+    viewCode: "コードを見る",
+    liveDemo: "デモを見る",
+    rail: "プロジェクト",
+  },
+  experience: {
+    heading: "経歴",
+    sub: "Larsen & Toubroでの産業IoT開発。モデルが実際のプラントで役に立つことが求められる現場でした。",
+  },
+  stack: {
+    heading: "技術スタック",
+    sub: "上のプロジェクトで使った技術を、システムの中での役割ごとにまとめています。",
+    technologies: "使用技術",
+  },
+  credentials: { education: "学歴", certifications: "資格", languages: "言語" },
+  contact: {
+    heading: "一緒に、本物をつくりましょう。",
+    sub: "AI・ML・フルスタック職を探しています。ご連絡はメールが一番早いです。",
+    copy: "メールアドレスをコピー",
+    builtWith: "React、Three.js、GSAPで制作。",
+    backToTop: "トップへ戻る",
+  },
+  toast: { emailCopied: "メールアドレスをコピーしました", copyFailed: "コピーできませんでした。テキストを選択してください。" },
+  palette: {
+    label: "コマンドメニュー",
+    close: "コマンドメニューを閉じる",
+    search: "コマンドを検索",
+    results: "コマンド",
+    empty: "該当するコマンドがありません。「メール」や「実績」で検索してください。",
+    groups: { go: "移動", contact: "連絡", links: "リンク", language: "言語" },
+    actions: {
+      about: "プロフィール",
+      work: "主なプロジェクト",
+      experience: "経歴",
+      stack: "技術スタック",
+      contact: "お問い合わせ",
+      top: "トップへ戻る",
+      copy: "メールアドレスをコピー",
+      mail: "メールを書く",
+      resume: "レジュメをダウンロード（英語）",
+      github: "GitHubを開く",
+      linkedin: "LinkedInを開く",
+      lang: "Switch to English",
+    },
+  },
+};
+
+export const ui = { en, ja } as const;

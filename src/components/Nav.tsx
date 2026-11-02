@@ -4,14 +4,10 @@ import { gsap, ScrollTrigger, useGSAP } from "../lib/gsap";
 import { isMac, reducedMotion } from "../lib/env";
 import { lockScroll, scrollToTarget } from "../lib/scroll";
 import { profile } from "../data/profile";
+import { useLang } from "../i18n/lang";
 import { Roll } from "./Roll";
 
-export const navLinks = [
-  { id: "about", label: "About" },
-  { id: "work", label: "Work" },
-  { id: "experience", label: "Experience" },
-  { id: "stack", label: "Stack" },
-] as const;
+const navIds = ["about", "work", "experience", "stack"] as const;
 
 function go(e: React.MouseEvent, target: string) {
   e.preventDefault();
@@ -25,6 +21,8 @@ export function Nav({ visible, onOpenPalette }: { visible: boolean; onOpenPalett
   const [active, setActive] = useState("");
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const { lang, setLang, t } = useLang();
+  const other = lang === "en" ? "ja" : "en";
 
   useGSAP(() => {
     gsap.fromTo(
@@ -51,19 +49,25 @@ export function Nav({ visible, onOpenPalette }: { visible: boolean; onOpenPalett
         }
       },
     });
-
-    gsap.utils.toArray<HTMLElement>("[data-nav]").forEach((el) => {
-      ScrollTrigger.create({
-        trigger: el,
-        start: "top 50%",
-        end: "bottom 50%",
-        onToggle: (self) => {
-          if (self.isActive) setActive(el.dataset.nav ?? "");
-          else if (self.direction === -1 && el.dataset.nav === "about") setActive("");
-        },
-      });
-    });
   });
+
+  // Page content remounts when the language changes, so section triggers are rebuilt with it.
+  useGSAP(
+    () => {
+      gsap.utils.toArray<HTMLElement>("[data-nav]").forEach((el) => {
+        ScrollTrigger.create({
+          trigger: el,
+          start: "top 50%",
+          end: "bottom 50%",
+          onToggle: (self) => {
+            if (self.isActive) setActive(el.dataset.nav ?? "");
+            else if (self.direction === -1 && el.dataset.nav === "about") setActive("");
+          },
+        });
+      });
+    },
+    { dependencies: [lang], revertOnUpdate: true },
+  );
 
   useGSAP(() => {
     if (!visible) return;
@@ -106,12 +110,17 @@ export function Nav({ visible, onOpenPalette }: { visible: boolean; onOpenPalett
       <header ref={header} className="invisible fixed inset-x-0 top-0 z-40 pt-3 md:pt-4">
         <div className="shell">
           <nav
-            aria-label="Primary"
-            className={`flex h-14 items-center justify-between rounded-full pr-2 pl-4 transition-[background-color,box-shadow,backdrop-filter] duration-500 ${
+            aria-label={t.nav.primary}
+            className={`flex h-14 items-center justify-between gap-2 rounded-full pr-2 pl-4 transition-[background-color,box-shadow,backdrop-filter] duration-500 ${
               scrolled ? "glass" : ""
             }`}
           >
-            <a href="#top" onClick={(e) => go(e, "#top")} className="group flex items-center gap-2.5 font-medium tracking-[-0.02em]">
+            <a
+              href="#top"
+              lang="en"
+              onClick={(e) => go(e, "#top")}
+              className="group flex shrink-0 items-center gap-2.5 font-medium tracking-[-0.02em]"
+            >
               <span
                 aria-hidden
                 className="h-3.5 w-3.5 rounded-full bg-[radial-gradient(circle,#ffe3d3_0%,#ec6a42_45%,rgb(236_106_66/0)_72%)] transition-transform duration-500 group-hover:scale-125"
@@ -120,17 +129,17 @@ export function Nav({ visible, onOpenPalette }: { visible: boolean; onOpenPalett
             </a>
 
             <ul className="hidden items-center gap-1 md:flex">
-              {navLinks.map((l) => (
-                <li key={l.id}>
+              {navIds.map((id) => (
+                <li key={id}>
                   <a
-                    href={`#${l.id}`}
-                    onClick={(e) => go(e, `#${l.id}`)}
-                    aria-current={active === l.id ? "true" : undefined}
+                    href={`#${id}`}
+                    onClick={(e) => go(e, `#${id}`)}
+                    aria-current={active === id ? "true" : undefined}
                     className={`group inline-flex rounded-full px-3.5 py-2 text-sm transition-colors duration-300 ${
-                      active === l.id ? "bg-white/[0.07] text-fog-100" : "text-fog-400 hover:text-fog-100"
+                      active === id ? "bg-white/[0.07] text-fog-100" : "text-fog-400 hover:text-fog-100"
                     }`}
                   >
-                    <Roll>{l.label}</Roll>
+                    <Roll>{t.nav[id]}</Roll>
                   </a>
                 </li>
               ))}
@@ -140,19 +149,29 @@ export function Nav({ visible, onOpenPalette }: { visible: boolean; onOpenPalett
               <button
                 type="button"
                 onClick={onOpenPalette}
-                aria-label="Open command menu"
-                className="hidden h-10 items-center gap-1 rounded-full border border-white/10 px-3 font-mono text-xs text-fog-300 transition-colors hover:border-white/25 hover:text-fog-100 md:inline-flex"
+                aria-label={t.nav.openPalette}
+                className="hidden h-10 items-center gap-1 rounded-full border border-white/10 px-3 font-mono text-xs text-fog-300 transition-colors hover:border-white/25 hover:text-fog-100 lg:inline-flex"
               >
                 <kbd className="font-mono">{isMac ? "⌘" : "Ctrl"}</kbd>
                 <kbd className="font-mono">K</kbd>
               </button>
-              <a href="#contact" onClick={(e) => go(e, "#contact")} className="group btn-primary h-10 px-5 text-sm">
-                <Roll>Get in touch</Roll>
+              <button
+                type="button"
+                onClick={() => setLang(other)}
+                aria-label={t.nav.switchLangLabel}
+                lang={other}
+                className="grid h-10 min-w-10 place-items-center rounded-full border border-white/10 px-2.5 text-xs text-fog-200 transition-colors hover:border-heat hover:text-heat md:px-3.5 md:text-[13px]"
+              >
+                <span className="font-mono md:hidden">{t.nav.switchLangShort}</span>
+                <span className="hidden md:inline">{t.nav.switchLang}</span>
+              </button>
+              <a href="#contact" onClick={(e) => go(e, "#contact")} className="group btn-primary h-10 px-4 text-sm md:px-5">
+                <Roll>{t.nav.cta}</Roll>
               </a>
               <button
                 type="button"
                 onClick={() => setMenuOpen(true)}
-                aria-label="Open menu"
+                aria-label={t.nav.openMenu}
                 aria-expanded={menuOpen}
                 className="grid h-10 w-10 place-items-center rounded-full border border-white/10 text-fog-100 md:hidden"
               >
@@ -168,37 +187,50 @@ export function Nav({ visible, onOpenPalette }: { visible: boolean; onOpenPalett
           ref={menu}
           role="dialog"
           aria-modal="true"
-          aria-label="Menu"
+          aria-label={t.nav.menu}
           className="fixed inset-0 z-50 flex flex-col bg-ink-950/96 px-5 pt-5 pb-10 backdrop-blur-xl md:hidden"
         >
           <div className="flex h-14 items-center justify-between pl-4">
-            <span className="font-medium">{profile.name}</span>
+            <span lang="en" className="font-medium">
+              {profile.name}
+            </span>
             <button
               type="button"
               onClick={() => setMenuOpen(false)}
-              aria-label="Close menu"
+              aria-label={t.nav.closeMenu}
               className="grid h-10 w-10 place-items-center rounded-full border border-white/10"
             >
               <XIcon size={18} />
             </button>
           </div>
           <ul className="mt-14 flex flex-col gap-2 pl-4">
-            {[...navLinks, { id: "contact", label: "Contact" }].map((l) => (
-              <li key={l.id} className="overflow-hidden">
+            {[...navIds, "contact" as const].map((id) => (
+              <li key={id} className="overflow-hidden">
                 <a
                   data-item
-                  href={`#${l.id}`}
-                  onClick={(e) => closeAndGo(e, `#${l.id}`)}
+                  href={`#${id}`}
+                  onClick={(e) => closeAndGo(e, `#${id}`)}
                   className={`block text-[clamp(2.6rem,12vw,4rem)] leading-[1.1] font-semibold tracking-[-0.05em] ${
-                    active === l.id ? "text-heat" : "text-fog-100"
+                    active === id ? "text-heat" : "text-fog-100"
                   }`}
                 >
-                  {l.label}
+                  {t.nav[id]}
                 </a>
               </li>
             ))}
           </ul>
           <div className="mt-auto flex flex-col gap-2 pl-4 text-fog-300">
+            <button
+              type="button"
+              lang={other}
+              onClick={() => {
+                setMenuOpen(false);
+                setLang(other);
+              }}
+              className="mb-4 self-start rounded-full border border-white/15 px-4 py-2 text-sm text-fog-100"
+            >
+              {t.nav.switchLang}
+            </button>
             <a href={`mailto:${profile.email}`}>{profile.email}</a>
             <div className="flex gap-5">
               <a href={profile.linkedin} target="_blank" rel="noreferrer">

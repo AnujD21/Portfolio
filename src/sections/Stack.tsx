@@ -4,9 +4,11 @@ import { reducedMotion } from "../lib/env";
 import { getLenis } from "../lib/scroll";
 import { logos, stackGroups } from "../data/stack";
 import { RevealText } from "../components/RevealText";
+import { useLang } from "../i18n/lang";
 
 /** Logo band whose speed and direction follow scroll velocity. */
 function LogoMarquee() {
+  const { t } = useLang();
   const track = useRef<HTMLUListElement>(null);
 
   useEffect(() => {
@@ -31,7 +33,7 @@ function LogoMarquee() {
 
   return (
     <div className="relative mt-16 overflow-hidden py-4 [mask-image:linear-gradient(90deg,transparent,#000_12%,#000_88%,transparent)]">
-      <ul ref={track} aria-label="Technologies" className="flex w-max items-center will-change-transform">
+      <ul ref={track} lang="en" aria-label={t.stack.technologies} className="flex w-max items-center will-change-transform">
         {[...logos, ...logos].map((l, i) => (
           <li
             key={`${l.title}-${i}`}
@@ -50,14 +52,16 @@ function LogoMarquee() {
 }
 
 export function Stack() {
+  const { lang, t, tr } = useLang();
+
   return (
     <section id="stack" data-nav="stack" className="relative py-28 md:py-40">
       <div className="shell">
         <RevealText as="h2" className="text-[clamp(2.4rem,5vw,4.6rem)] leading-[1.04] font-semibold tracking-[-0.05em]">
-          Stack
+          {t.stack.heading}
         </RevealText>
-        <p data-reveal className="mt-5 max-w-[46ch] text-fog-300">
-          The tools behind the projects above, grouped by where they sit in a system.
+        <p data-reveal className={`mt-5 text-fog-300 ${lang === "ja" ? "max-w-[28em]" : "max-w-[46ch]"}`}>
+          {t.stack.sub}
         </p>
       </div>
 
@@ -69,12 +73,12 @@ export function Stack() {
           className="grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-white/[0.08] bg-white/[0.07] lg:grid-cols-5"
         >
           {stackGroups.map((g) => (
-            <div key={g.title} className="bg-ink-950/92 p-5 backdrop-blur-sm last:col-span-2 md:p-7 lg:last:col-span-1">
-              <h3 className="label text-heat">{g.title}</h3>
+            <div key={g.title.en} className="bg-ink-950/92 p-5 backdrop-blur-sm last:col-span-2 md:p-7 lg:last:col-span-1">
+              <h3 className="label text-heat">{tr(g.title)}</h3>
               <ul className="mt-5 space-y-2.5">
                 {g.items.map((item) => (
-                  <li key={item} className="text-fog-200">
-                    {item}
+                  <li key={tr(item)} className="text-fog-200">
+                    {tr(item)}
                   </li>
                 ))}
               </ul>

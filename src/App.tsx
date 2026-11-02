@@ -1,7 +1,7 @@
-import { lazy, Suspense, useCallback, useEffect, useMemo, useState } from "react";
+import { lazy, Suspense, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { gsap, ScrollTrigger, useGSAP } from "./lib/gsap";
 import { hasWebGL, reducedMotion } from "./lib/env";
-import { initSmoothScroll, lockScroll } from "./lib/scroll";
+import { initSmoothScroll, lockScroll, scrollToTarget } from "./lib/scroll";
 import { SCENE_READY_EVENT, sceneState } from "./lib/sceneState";
 import { Preloader } from "./components/Preloader";
 import { Nav } from "./components/Nav";
@@ -15,13 +15,16 @@ import { Stack } from "./sections/Stack";
 import { Credentials } from "./sections/Credentials";
 import { Contact } from "./sections/Contact";
 import { formationConfigs } from "./three/formations";
+import { takeAnchor, useLang, type Lang } from "./i18n/lang";
 
 const ParticleField = lazy(() => import("./three/ParticleField"));
 
-function loadFonts() {
+function loadFonts(lang: Lang) {
   return Promise.all([
     document.fonts.load('500 1em "Geist Variable"'),
     document.fonts.load('400 1em "Geist Mono Variable"'),
+    // Only the Japanese subsets this text touches are fetched; the rest load on demand.
+    lang === "ja" ? document.fonts.load('500 1em "Noto Sans JP Variable"', "日本語のポートフォリオ") : null,
   ]).catch(() => undefined);
 }
 
@@ -30,9 +33,11 @@ export default function App() {
   const [booted, setBooted] = useState(false);
   const [revealed, setRevealed] = useState(false);
   const [paletteOpen, setPaletteOpen] = useState(false);
+  const { lang, t } = useLang();
+  const bootLang = useRef(lang);
 
   const tasks = useMemo(() => {
-    const fonts = loadFonts();
+    const fonts = loadFonts(bootLang.current);
     const scene = new Promise<void>((resolve) => {
       if (!webgl || sceneState.ready) return resolve();
       window.addEventListener(SCENE_READY_EVENT, () => resolve(), { once: true });
@@ -95,8 +100,22 @@ export default function App() {
         });
       }
     },
-    { dependencies: [booted] },
+    { dependencies: [booted, lang], revertOnUpdate: true },
   );
+
+  // After a language switch the content remounts with different text lengths:
+  // bring back the section that was on screen, then re-measure once the new glyphs have loaded.
+  const switched = useRef(false);
+  useEffect(() => {
+    if (!switched.current) {
+      switched.current = true;
+      return;
+    }
+    const anchor = takeAnchor();
+    const el = anchor && document.getElementById(anchor.id);
+    if (anchor && el) scrollToTarget(el.getBoundingClientRect().top + window.scrollY - anchor.offset, true);
+    void document.fonts.ready.then(() => ScrollTrigger.refresh());
+  }, [lang]);
 
   return (
     <>
@@ -104,7 +123,7 @@ export default function App() {
         href="#main"
         className="sr-only z-[90] rounded-full bg-heat px-5 py-3 text-ink-950 focus:not-sr-only focus:fixed focus:top-4 focus:left-4"
       >
-        Skip to content
+        {t.skip}
       </a>
 
       {webgl ? (
@@ -128,7 +147,7 @@ export default function App() {
       {booted && (
         <>
           <Nav visible={revealed} onOpenPalette={() => setPaletteOpen(true)} />
-          <main id="main" className="relative z-10">
+          <main key={lang} id="main" className="relative z-10">
             <Hero play={revealed} />
             <About />
             <Work />

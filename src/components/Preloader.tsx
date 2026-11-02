@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { gsap } from "../lib/gsap";
 import { reducedMotion } from "../lib/env";
 import { profile } from "../data/profile";
+import { useLang } from "../i18n/lang";
 
 const VISITED_KEY = "ad:visited";
 
@@ -25,13 +26,14 @@ export function Preloader({ tasks, onReveal }: { tasks: Promise<unknown>[]; onRe
   const count = useRef<HTMLSpanElement>(null);
   const bar = useRef<HTMLSpanElement>(null);
   const [gone, setGone] = useState(false);
+  const { t, tr } = useLang();
   const revealRef = useRef(onReveal);
   revealRef.current = onReveal;
 
   useEffect(() => {
     let done = 0;
     let finished = false;
-    tasks.forEach((t) => t.finally(() => done++));
+    tasks.forEach((task) => task.finally(() => done++));
     const minMs = reducedMotion ? 0 : isReturnVisit() ? 500 : 1500;
     const start = performance.now();
     let shown = 0;
@@ -72,24 +74,26 @@ export function Preloader({ tasks, onReveal }: { tasks: Promise<unknown>[]; onRe
     <div
       ref={root}
       role="status"
-      aria-label="Loading"
+      aria-label={t.preloader.label}
+      data-preloader
       className="fixed inset-0 z-[80] bg-ink-950"
       style={{ clipPath: "inset(0% 0% 0% 0%)" }}
     >
       <div ref={inner} className="flex h-full flex-col justify-between p-5 md:p-10">
         <div className="flex items-start justify-between">
-          <span className="text-lg font-medium tracking-[-0.02em]">{profile.name}</span>
-          <span className="label">{profile.role}</span>
+          <span lang="en" className="text-lg font-medium tracking-[-0.02em]">{profile.name}</span>
+          <span className="label">{tr(profile.role)}</span>
         </div>
         <div className="flex items-end justify-between gap-8">
           <span
             ref={count}
+            lang="en"
             className="font-mono text-[clamp(4.5rem,15vw,12rem)] leading-[0.8] font-medium tracking-[-0.06em] text-fog-100 tabular"
           >
             000
           </span>
           <div className="mb-3 w-[38%] max-w-[360px]">
-            <span className="label">Assembling scene</span>
+            <span className="label">{t.preloader.status}</span>
             <span className="mt-3 block h-px w-full bg-white/10">
               <span ref={bar} className="block h-full origin-left scale-x-0 bg-heat" />
             </span>
