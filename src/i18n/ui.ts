@@ -23,7 +23,7 @@ const en = {
     switchLangShort: "JA",
     switchLangLabel: "View this site in Japanese",
   },
-  hero: { viewWork: "View work", resume: "Résumé" },
+  hero: { viewWork: "View work", resume: "Resume" },
   work: {
     heading: "Selected work",
     sub: "Five systems across computer vision, industrial IoT, document AI and edge infrastructure.",
@@ -65,7 +65,7 @@ const en = {
       top: "Back to top",
       copy: "Copy email address",
       mail: "Write an email",
-      resume: "Download résumé",
+      resume: "Download resume",
       github: "Open GitHub",
       linkedin: "Open LinkedIn",
       lang: "日本語で表示する",

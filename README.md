@@ -39,7 +39,7 @@ About 22,000 particles, coloured like a thermal camera (steel, then heat orange,
 - **Scroll-driven 3D.** The formations morph as you scroll. Particles arc through space between shapes, a scan line sweeps across some of them, and they move away from your cursor.
 - **Motion.** GSAP ScrollTrigger and SplitText for text reveals, an About paragraph that lights up word by word, count-up stats, and Lenis smooth scrolling.
 - **Preloader.** It counts against real work (fonts and the WebGL scene), then lifts away while the particles fly in and assemble.
-- **Command palette.** Press <kbd>Ctrl</kbd> + <kbd>K</kbd> (<kbd>⌘</kbd> + <kbd>K</kbd> on Mac) to jump to a section, copy the email address or download the résumé.
+- **Command palette.** Press <kbd>Ctrl</kbd> + <kbd>K</kbd> (<kbd>⌘</kbd> + <kbd>K</kbd> on Mac) to jump to a section, copy the email address or download the resume.
 - **Details.** Magnetic buttons, film grain, a velocity-linked logo strip, hover text rolls and a scroll progress bar.
 - **English and Japanese.** One click in the nav (or `/ja` in the URL) switches every word on the page. You stay on the same section, and the 3D scene carries on. Japanese text uses Noto Sans JP, wraps at natural phrase boundaries (BudouX), and gets its own spacing rules rather than the tight Latin tracking.
 - **Responsive.** On phones each formation sits in a header band above its project, and the text slides over it on a solid sheet.
@@ -79,8 +79,8 @@ src/
   three/         ParticleField (React Three Fiber), formations, GLSL shaders
   lib/           GSAP setup, Lenis scrolling, shared scene state, environment checks
   styles/        Tailwind v4 theme tokens, global styles, Japanese typography rules
-resume/          HTML source of the résumé PDF
-public/          Favicon, résumé PDF and project images
+resume/          HTML source of the resume PDF
+public/          Favicon, resume PDF and project images
 docs/            Screenshots used in this README
 ```
 
@@ -99,9 +99,9 @@ npm run preview   # serve the production build locally
 
 All text lives in `src/data/` (content about Anuj) and `src/i18n/ui.ts` (buttons, headings and other interface copy), so content changes don't touch layout code. Every piece of text is written as `{ en: "...", ja: "..." }`, and TypeScript flags a missing translation. If you add or remove a featured project, also add or remove its entry in `formationConfigs` and `generators` in `src/three/formations.ts`. Those lists are matched to the page sections by order.
 
-## Résumé
+## Resume
 
-The downloadable résumé (`public/Anuj_Das_Resume.pdf`) is generated from `resume/resume.html`, a one-page A4 layout in Geist with real, selectable text for applicant tracking systems. To update it:
+The downloadable resume (`public/Anuj_Das_Resume.pdf`) is generated from `resume/resume.html`, a one-page A4 layout in Geist with real, selectable text for applicant tracking systems. To update it:
 
 1. Run `npm install` (the page loads its fonts from `node_modules`).
 2. Edit `resume/resume.html` and open it in Chrome.
@@ -130,4 +130,4 @@ The site is hosted on Vercel and Vercel detects the settings automatically:
 - LinkedIn: [in/anujdas2109](https://www.linkedin.com/in/anujdas2109)
 - GitHub: [AnujD21](https://github.com/AnujD21)
 
-© 2026 Anuj Das. The code is public for reference. The personal content (text, résumé and project images) belongs to Anuj Das and may not be reused.
+© 2026 Anuj Das. The code is public for reference. The personal content (text, resume and project images) belongs to Anuj Das and may not be reused.
