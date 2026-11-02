@@ -1,0 +1,325 @@
+<!doctype html>
+<!--
+  Source for public/Anuj_Das_Resume.pdf.
+  To update: edit this file, open it in Chrome, Print, Destination "Save as PDF", Paper A4,
+  Margins "Default", untick "Headers and footers", tick "Background graphics", then save over
+  public/Anuj_Das_Resume.pdf. Fonts load from node_modules, so run `npm install` first.
+-->
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Anuj Das - Résumé</title>
+    <meta name="author" content="Anuj Das" />
+    <style>
+      @font-face {
+        font-family: "Geist";
+        src: url("../node_modules/@fontsource/geist/files/geist-latin-400-normal.woff2") format("woff2");
+        font-weight: 400;
+      }
+      @font-face {
+        font-family: "Geist";
+        src: url("../node_modules/@fontsource/geist/files/geist-latin-500-normal.woff2") format("woff2");
+        font-weight: 500;
+      }
+      @font-face {
+        font-family: "Geist";
+        src: url("../node_modules/@fontsource/geist/files/geist-latin-600-normal.woff2") format("woff2");
+        font-weight: 600;
+      }
+
+      @page {
+        size: A4;
+        margin: 11mm 13mm 9mm;
+      }
+
+      :root {
+        --ink: #15171b;
+        --muted: #555c67;
+        --accent: #c4502b;
+        --rule: #d7dbe1;
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: "Geist", "Helvetica Neue", Arial, sans-serif;
+        font-size: 9.1pt;
+        line-height: 1.33;
+        color: var(--ink);
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        gap: 16pt;
+        padding-bottom: 7pt;
+        border-bottom: 1.2pt solid var(--ink);
+      }
+
+      h1 {
+        font-size: 24pt;
+        line-height: 1;
+        font-weight: 600;
+        letter-spacing: -0.025em;
+      }
+
+      .role {
+        margin-top: 4pt;
+        font-size: 10.5pt;
+        font-weight: 500;
+        color: var(--accent);
+      }
+
+      .contact {
+        font-size: 8.6pt;
+        line-height: 1.5;
+        color: var(--muted);
+        text-align: right;
+      }
+
+      .contact strong {
+        color: var(--ink);
+        font-weight: 500;
+      }
+
+      .summary {
+        margin-top: 7pt;
+        color: #2b2f36;
+      }
+
+      section {
+        margin-top: 8.5pt;
+      }
+
+      h2 {
+        font-size: 8.3pt;
+        font-weight: 600;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        color: var(--accent);
+        padding-bottom: 2.5pt;
+        margin-bottom: 1pt;
+        border-bottom: 0.6pt solid var(--rule);
+      }
+
+      .entry {
+        margin-top: 4.5pt;
+        break-inside: avoid;
+      }
+
+      .row {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        gap: 12pt;
+      }
+
+      .title {
+        font-weight: 600;
+      }
+
+      .title .org {
+        font-weight: 400;
+        color: var(--muted);
+      }
+
+      .date {
+        font-size: 8.6pt;
+        color: var(--muted);
+        white-space: nowrap;
+        font-variant-numeric: tabular-nums;
+      }
+
+      .stack {
+        font-size: 8.5pt;
+        color: var(--muted);
+      }
+
+      ul {
+        margin-top: 2pt;
+        padding-left: 11pt;
+      }
+
+      li {
+        margin-top: 1.1pt;
+        padding-left: 1pt;
+      }
+
+      li::marker {
+        color: var(--accent);
+      }
+
+      /* Label and values share one line of text so ATS parsers keep them together. */
+      .skills {
+        margin-top: 3pt;
+      }
+
+      .skills p {
+        margin-top: 1.6pt;
+      }
+
+      .skills strong {
+        font-weight: 600;
+      }
+
+      .certs {
+        display: grid;
+        grid-template-columns: 1.45fr 1fr;
+        gap: 0 18pt;
+        margin-top: 3pt;
+      }
+
+      .plain {
+        list-style: none;
+        padding-left: 0;
+      }
+
+      .plain li {
+        padding-left: 0;
+      }
+
+      .link {
+        color: var(--accent);
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div>
+        <h1>Anuj Das</h1>
+        <p class="role">AI and ML Engineer</p>
+      </div>
+      <p class="contact">
+        Chennai, India · <a href="mailto:anujdas2109@gmail.com">anujdas2109@gmail.com</a> · +91 98451 18920<br />
+        <a href="https://anujdas.vercel.app"><strong>anujdas.vercel.app</strong></a> ·
+        <a href="https://www.linkedin.com/in/anujdas2109">linkedin.com/in/anujdas2109</a> ·
+        <a href="https://github.com/AnujD21">github.com/AnujD21</a>
+      </p>
+    </header>
+
+    <p class="summary">
+      AI and ML engineering student (graduating 2027) building computer vision, sensor-fusion and edge systems that work
+      outside the lab: industrial IoT software at Larsen &amp; Toubro, an offline rescue drone, and full-stack AI products.
+    </p>
+
+    <section>
+      <h2>Experience</h2>
+      <div class="entry">
+        <div class="row">
+          <p class="title">Software Engineering Intern <span class="org">· Larsen &amp; Toubro (L&amp;T), Chennai</span></p>
+          <p class="date">Jun 2025 – Jul 2025</p>
+        </div>
+        <p class="stack">Python · Scikit-learn · React.js · IoT</p>
+        <ul>
+          <li>Built a Scikit-learn pipeline that classifies and predicts sensor anomalies in industrial chillers, cutting fault detection time by ~40%, and an ML-driven alert system that cut failure response from hours to under 5 minutes.</li>
+          <li>Engineered a real-time IoT ingestion layer for 10+ live devices, feeding the operations team's daily React.js dashboard.</li>
+          <li>Developed a digital twin of the chiller network: a React.js plant map showing 20+ valves in real time, with virtual valve control and temperature, pressure and flow data at under 2-second latency, reducing operator intervention by ~60%.</li>
+          <li>Shipped production-ready software in a 45-day internship with mechanical and electrical engineers across 3 teams.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <h2>Projects</h2>
+
+      <div class="entry">
+        <div class="row">
+          <p class="title">SkyNetics Rescue Drone <span class="org">· Team of 4, software</span></p>
+          <p class="date">2026</p>
+        </div>
+        <p class="stack">Python · YOLOv8 · ONNX Runtime · OpenCV · Raspberry Pi 4 · Sensor fusion · <a class="link" href="https://github.com/AnujD21/SkyNetics_RAS_Drone">GitHub</a></p>
+        <ul>
+          <li>Built the on-device software for a fully offline drone that locates people buried by avalanches and landslides by fusing thermal imaging, mmWave radar and YOLOv8 vision on a Raspberry Pi 4.</li>
+          <li>Designed a three-thread capture, inference and display pipeline that hands off only the latest frame, keeping the pilot's live overlay at ~30 fps even when inference stalls.</li>
+          <li>Implemented adaptive thermal thresholding, confidence-weighted sensor fusion and Kalman + SORT multi-object tracking.</li>
+        </ul>
+      </div>
+
+      <div class="entry">
+        <div class="row">
+          <p class="title">Shigotai <span class="org">· AI career platform for jobs in Japan</span></p>
+          <p class="date">2026</p>
+        </div>
+        <p class="stack">Next.js · TypeScript · FastAPI · SQLAlchemy · LLM · <a class="link" href="https://shigotai-jobs.vercel.app">Live demo</a> · <a class="link" href="https://github.com/AnujD21/Shigotai">GitHub</a></p>
+        <ul>
+          <li>Built a full-stack platform that matches candidates to live openings at Japanese companies, ingesting postings from the Greenhouse, Lever, Ashby and SmartRecruiters APIs.</li>
+          <li>Designed a three-stage matching engine (rule-based eligibility, explainable semantic matching, LLM explanations only for shortlisted jobs) and a résumé parser that verifies every extracted field against the source text.</li>
+        </ul>
+      </div>
+
+      <div class="entry">
+        <div class="row">
+          <p class="title">SmartInvoice AI <span class="org">· Document intelligence system</span></p>
+          <p class="date">Jan 2026 – Feb 2026</p>
+        </div>
+        <p class="stack">Python · OCR · Machine Learning · NLP</p>
+        <ul>
+          <li>Built an OCR pipeline that extracts 15+ structured fields from unstructured PDF invoices with 89% field-level accuracy, reducing processing time by 70% versus manual entry.</li>
+          <li>Added explainable per-field confidence scores so auditors review only low-confidence extractions.</li>
+        </ul>
+      </div>
+
+      <div class="entry">
+        <div class="row">
+          <p class="title">EdgeGrid <span class="org">· Firmware management for edge devices</span></p>
+          <p class="date">2026</p>
+        </div>
+        <p class="stack">React · TypeScript · Django REST · PostgreSQL · Redis · Celery · Docker · <a class="link" href="https://github.com/AnujD21/EdgeGrid">GitHub</a></p>
+        <ul>
+          <li>Built a control plane for heterogeneous edge devices with per-device-type firmware compatibility, verified installs, progress reporting and automatic rollback on failure.</li>
+          <li>Live device health over Django Channels WebSockets, background jobs on Celery and Redis, packaged with Docker.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <h2>Technical Skills</h2>
+      <div class="skills">
+        <p><strong>Languages:</strong> Python, Java, JavaScript, TypeScript, SQL</p>
+        <p><strong>ML and Computer Vision:</strong> Scikit-learn, TensorFlow, YOLOv8, ONNX Runtime, OpenCV, Pandas, NumPy, OCR</p>
+        <p><strong>Web and Backend:</strong> React, Next.js, Node.js, FastAPI, Django REST Framework, HTML5, CSS3, Tailwind CSS</p>
+        <p><strong>Data and DevOps:</strong> PostgreSQL, MySQL, Redis, Celery, Docker, Git</p>
+        <p><strong>Edge and IoT:</strong> Raspberry Pi, sensor fusion, thermal imaging, mmWave radar, real-time telemetry</p>
+        <p><strong>Spoken languages:</strong> English, Hindi, Japanese (JLPT N3)</p>
+      </div>
+    </section>
+
+    <section>
+      <h2>Education</h2>
+      <div class="entry">
+        <div class="row">
+          <p class="title">B.E. Computer Science Engineering (AI and ML) <span class="org">· Easwari Engineering College, Chennai</span></p>
+          <p class="date">CGPA 8.63 · 2023 – 2027</p>
+        </div>
+      </div>
+      <div class="entry">
+        <div class="row">
+          <p class="title">Class I to XII <span class="org">· Kendriya Vidyalaya No. 1, Mangalore</span></p>
+          <p class="date">2010 – 2023</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Certifications</h2>
+      <ul class="plain certs">
+        <li><span class="title">Oracle Certified Professional: Java SE 11 Developer</span> · Oracle, 2026</li>
+        <li><span class="title">JLPT N3</span> · Japanese-Language Proficiency Test</li>
+        <li><span class="title">IoT and Privacy in Social Media</span> · NPTEL, 2025</li>
+        <li><span class="title">NAT-TEST 3Q</span> · Japanese language proficiency</li>
+      </ul>
+    </section>
+  </body>
+</html>
