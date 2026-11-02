@@ -581,14 +581,14 @@ function ring(c: Cloud) {
 const generators = [sphere, wave, terrain, pipes, documentScan, graph, devices, dust, ring];
 
 export const formationConfigs: FormationConfig[] = [
-  { name: "hero", x: 1.75, y: 0.3, scale: 1, rotX: 0.3, rotY: 0, spin: 0.07, noise: 0.09, scanAxis: 0, scanStrength: 0, scanSpeed: 0, brightness: 1, narrow: { x: 0, y: 0.5, scale: 0.7, brightness: 0.85 } },
+  { name: "hero", x: 1.75, y: 0.3, scale: 1, rotX: 0.3, rotY: 0, spin: 0.07, noise: 0.09, scanAxis: 0, scanStrength: 0, scanSpeed: 0, brightness: 1, narrow: { x: 0, y: -0.35, scale: 0.58, brightness: 0.9 } },
   { name: "about", x: 0, y: -1.3, scale: 1, rotX: 0.38, rotY: 0, spin: 0, noise: 0.06, scanAxis: 1, scanStrength: 0.5, scanSpeed: 0.9, brightness: 0.7, narrow: { y: -1.7, scale: 0.7, brightness: 0.5 } },
   // On narrow screens project formations sit in the top band; the project text starts below them.
-  { name: "skynetics", x: 1.9, y: -0.1, scale: 1, rotX: 0.62, rotY: -0.45, spin: 0, noise: 0.015, scanAxis: 1, scanStrength: 0.9, scanSpeed: 0.75, brightness: 1, narrow: { x: 0, y: 1.05, scale: 0.5, brightness: 0.75 } },
-  { name: "chiller", x: 1.75, y: 0, scale: 0.7, rotX: 0.2, rotY: -0.55, spin: 0, noise: 0.012, scanAxis: 1, scanStrength: 0.5, scanSpeed: 1.1, brightness: 1, narrow: { x: 0, y: 1.05, scale: 0.38, brightness: 0.75 } },
-  { name: "smartinvoice", x: 1.7, y: 0, scale: 0.95, rotX: 0.06, rotY: -0.3, spin: 0, noise: 0.008, scanAxis: 2, scanStrength: 1, scanSpeed: 0.6, brightness: 1, narrow: { x: -0.15, y: 1.05, scale: 0.55, brightness: 0.75 } },
-  { name: "shigotai", x: 1.9, y: 0, scale: 0.95, rotX: 0.15, rotY: 0.25, spin: 0, noise: 0.025, scanAxis: 0, scanStrength: 0, scanSpeed: 0, brightness: 1, narrow: { x: 0, y: 1.05, scale: 0.52, brightness: 0.75 } },
-  { name: "edgegrid", x: 1.85, y: 0, scale: 0.76, rotX: 0.35, rotY: 0.6, spin: 0, noise: 0.01, scanAxis: 1, scanStrength: 0.6, scanSpeed: 0.8, brightness: 1, narrow: { x: 0.1, y: 1.05, scale: 0.44, brightness: 0.75 } },
+  { name: "skynetics", x: 1.9, y: -0.1, scale: 1, rotX: 0.62, rotY: -0.45, spin: 0, noise: 0.015, scanAxis: 1, scanStrength: 0.9, scanSpeed: 0.75, brightness: 1, narrow: { x: 0, y: 1.05, scale: 0.5, brightness: 0.95 } },
+  { name: "chiller", x: 1.75, y: 0, scale: 0.7, rotX: 0.2, rotY: -0.55, spin: 0, noise: 0.012, scanAxis: 1, scanStrength: 0.5, scanSpeed: 1.1, brightness: 1, narrow: { x: 0, y: 1.05, scale: 0.38, brightness: 0.95 } },
+  { name: "smartinvoice", x: 1.7, y: 0, scale: 0.95, rotX: 0.06, rotY: -0.3, spin: 0, noise: 0.008, scanAxis: 2, scanStrength: 1, scanSpeed: 0.6, brightness: 1, narrow: { x: -0.15, y: 1.05, scale: 0.55, brightness: 0.95 } },
+  { name: "shigotai", x: 1.9, y: 0, scale: 0.95, rotX: 0.15, rotY: 0.25, spin: 0, noise: 0.025, scanAxis: 0, scanStrength: 0, scanSpeed: 0, brightness: 1, narrow: { x: 0, y: 1.05, scale: 0.52, brightness: 0.95 } },
+  { name: "edgegrid", x: 1.85, y: 0, scale: 0.76, rotX: 0.35, rotY: 0.6, spin: 0, noise: 0.01, scanAxis: 1, scanStrength: 0.6, scanSpeed: 0.8, brightness: 1, narrow: { x: 0.1, y: 1.05, scale: 0.44, brightness: 0.95 } },
   { name: "dust", x: 0, y: 0, scale: 1, rotX: 0, rotY: 0, spin: 0.02, noise: 0.18, scanAxis: 0, scanStrength: 0, scanSpeed: 0, brightness: 0.4 },
   { name: "contact", x: 0, y: 0.15, scale: 1.05, rotX: 1.1, rotY: 0, spin: 0.12, noise: 0.04, scanAxis: 0, scanStrength: 0, scanSpeed: 0, brightness: 1, narrow: { scale: 0.62, brightness: 0.8 } },
 ];

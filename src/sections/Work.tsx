@@ -17,7 +17,13 @@ function ProjectBlock({ project: p }: { project: Project }) {
       aria-labelledby={`${p.slug}-title`}
       className="relative flex min-h-[100dvh] items-start pt-[46svh] pb-20 md:items-center md:py-32"
     >
-      <div className="shell">
+      {/* Phones: the formation shows in the empty header band, then the text slides over it on an
+          opaque sheet instead of mixing with the fixed particles behind it. */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-x-0 top-[calc(46svh-7rem)] bottom-0 bg-[linear-gradient(to_bottom,transparent,var(--color-ink-950)_6rem)] md:hidden"
+      />
+      <div className="shell relative">
         <div className="max-w-[620px] md:w-[52%] lg:w-[45%]">
           <p data-reveal className="label flex flex-wrap gap-x-5 gap-y-1">
             <span className="text-heat">{p.year}</span>
